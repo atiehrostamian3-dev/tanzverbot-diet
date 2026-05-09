@@ -41,18 +41,9 @@ export function calcDateOnDiet(
     const servings = foodServings[index] || 0;
     dailyCaloriesOnDiet += calories * servings;
   }
-  let dailyCaloriesBasicMetabolicRate = 0;
-  if (sex == Sex.Male) {
-    dailyCaloriesBasicMetabolicRate = Math.ceil(
-      // Harris-Benedict-Formula (Male)
-      66.47 + 13.7 * currentWeightKg + 5.003 * heightM * 100.0 - 6.75 * ageY,
-    );
-  } else {
-    dailyCaloriesBasicMetabolicRate = Math.ceil(
-      // Harris-Benedict-Formula (Female)
-      655.1 + 9.563 * currentWeightKg + 1.85 * heightM * 100.0 - 4.676 * ageY,
-    );
-  }
+
+  const dailyCaloriesBasicMetabolicRate = calcBMR(currentWeightKg, heightM, ageY, sex);
+  
   const dailyExcessCalories =
     dailyCaloriesOnDiet - dailyCaloriesBasicMetabolicRate;
   if (dailyExcessCalories <= 0) {
@@ -61,4 +52,18 @@ export function calcDateOnDiet(
 
   // TODO: Die Zahl 9000 sollte am Anfang der Datei als Konstante definiert werden (z. B. CALORIES_PER_KG_FAT).
   return Math.ceil((9000 * weightGainKg) / dailyExcessCalories);
+}
+
+function calcBMR(weightKg: number, heightM: number, ageY: number, sex: Sex): number {
+  if (sex == Sex.Male) {
+    return Math.ceil(
+      // Harris-Benedict-Formula (Male)
+      66.47 + 13.7 * weightKg + 5.003 * heightM * 100.0 - 6.75 * ageY,
+    );
+  } else {
+    return Math.ceil(
+      // Harris-Benedict-Formula (Female)
+      655.1 + 9.563 * weightKg + 1.85 * heightM * 100.0 - 4.676 * ageY,
+    );
+  }
 }
