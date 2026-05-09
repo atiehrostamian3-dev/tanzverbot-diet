@@ -3,6 +3,7 @@ export enum Sex {
   Female = "f",
 }
 
+// TODO: Diese drei Arrays (foodNames, foodCalories, foodServings) sollten in ein Array von Objekten (z. B. FoodItem) umgewandelt werden.
 const foodNames: string[] = [
   "Kellogg's Tresor",
   "Weihenstephan Haltbare Milch",
@@ -18,6 +19,8 @@ const foodNames: string[] = [
 const foodCalories: number[] = [137, 64, 271, 40, 297, 125, 482, 835, 37, 59];
 const foodServings: number[] = [4, 8, 4, 12, 1, 6, 2, 2, 25, 20];
 
+// TODO: Die Berechnung nach der Harris-Benedict-Formel (BMR) sollte in eine separate, eigenständige Funktion ausgelagert werden, um diese Funktion übersichtlicher zu gestalten.
+// TODO: Die Berechnung der Gesamtkalorien aus der Nahrung kann ebenfalls in eine separate Funktion ausgelagert werden.
 export function calcDateOnDiet(
   currentWeightKg: number,
   targetWeightKg: number,
@@ -55,5 +58,7 @@ export function calcDateOnDiet(
   if (dailyExcessCalories <= 0) {
     throw new Error("This diet is not sufficient for you to gain weight.");
   }
+
+  // TODO: Die Zahl 9000 sollte am Anfang der Datei als Konstante definiert werden (z. B. CALORIES_PER_KG_FAT).
   return Math.ceil((9000 * weightGainKg) / dailyExcessCalories);
 }
