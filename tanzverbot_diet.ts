@@ -3,6 +3,8 @@ export enum Sex {
   Female = "f",
 }
 
+const CALORIES_PER_KG_FAT = 9000;
+
 // TODO: Diese drei Arrays (foodNames, foodCalories, foodServings) sollten in ein Array von Objekten (z. B. FoodItem) umgewandelt werden.
 const foodNames: string[] = [
   "Kellogg's Tresor",
@@ -43,7 +45,7 @@ export function calcDateOnDiet(
   }
 
   const dailyCaloriesBasicMetabolicRate = calcBMR(currentWeightKg, heightM, ageY, sex);
-  
+
   const dailyExcessCalories =
     dailyCaloriesOnDiet - dailyCaloriesBasicMetabolicRate;
   if (dailyExcessCalories <= 0) {
@@ -51,7 +53,7 @@ export function calcDateOnDiet(
   }
 
   // TODO: Die Zahl 9000 sollte am Anfang der Datei als Konstante definiert werden (z. B. CALORIES_PER_KG_FAT).
-  return Math.ceil((9000 * weightGainKg) / dailyExcessCalories);
+  return Math.ceil((CALORIES_PER_KG_FAT * weightGainKg) / dailyExcessCalories);
 }
 
 function calcBMR(weightKg: number, heightM: number, ageY: number, sex: Sex): number {
