@@ -39,14 +39,14 @@ export function calcDateOnDiet(
     throw new Error(`You do not qualify for this kind of diet.`);
   }
   
-  // محاسبه کالری غذاها با ساختار جدید
   let dailyCaloriesOnDiet = 0;
   for (const food of dietFoods) {
     dailyCaloriesOnDiet += food.calories * food.servings;
   }
 
-  const dailyCaloriesBasicMetabolicRate = calcBMR(currentWeightKg, heightM, ageY, sex);
-
+  const averageWeightKg = (currentWeightKg + targetWeightKg) / 2;
+  const dailyCaloriesBasicMetabolicRate = calcBMR(averageWeightKg, heightM, ageY, sex);
+  
   const dailyExcessCalories =
     dailyCaloriesOnDiet - dailyCaloriesBasicMetabolicRate;
   if (dailyExcessCalories <= 0) {
